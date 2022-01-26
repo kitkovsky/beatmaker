@@ -8,11 +8,11 @@
 }
 
 .kick-pad {
-  background: #cc241d;
+  background: #c5504e;
 }
 
 .kick-pad.active {
-  background: #fc2821;
+  background: #c50300;
 }
 
 .snare-pad {
@@ -20,15 +20,15 @@
 }
 
 .snare-pad.active {
-  background: #a3f9a7;
+  background: #008004;
 }
 
 .hihat-pad {
-  background: #d79921;
+  background: #cba358;
 }
 
 .hihat-pad.active {
-  background: #feb329;
+  background: #a76d00;
 }
 
 .sequencer {
@@ -67,7 +67,7 @@
     border: none;
     background: #3c3836;
     color: white;
-    font-size: 1rem;
+    font-size: 1.5rem;
     cursor: pointer;
     transition: all 0.5s ease;
   }
