@@ -10,7 +10,8 @@ class DrumKit {
   step: number;
   bpm: number;
   intervalID: number;
-  selects: NodeListOf<Element>;
+  selects: NodeListOf<HTMLSelectElement>;
+  muteButtons: NodeListOf<HTMLButtonElement>;
 
   constructor() {
     this.playButton = document.querySelector(".play");
@@ -25,6 +26,7 @@ class DrumKit {
     this.bpm = 150;
     this.intervalID = null;
     this.selects = document.querySelectorAll("select");
+    this.muteButtons = document.querySelectorAll(".mute");
   }
 
   start(): void {
@@ -90,6 +92,36 @@ class DrumKit {
         break;
     }
   }
+
+  mute(event: Event): void {
+    const selectedVolume = (event.target as HTMLButtonElement).classList[1];
+    (event.target as HTMLButtonElement).classList.toggle("active");
+    if ((event.target as HTMLButtonElement).classList.contains("active")) {
+      switch (selectedVolume) {
+        case "kick-volume":
+          this.kickAudio.volume = 0;
+          break;
+        case "snare-volume":
+          this.snareAudio.volume = 0;
+          break;
+        case "hihat-volume":
+          this.hihatAudio.volume = 0;
+          break;
+      }
+    } else {
+      switch (selectedVolume) {
+        case "kick-volume":
+          this.kickAudio.volume = 1;
+          break;
+        case "snare-volume":
+          this.snareAudio.volume = 1;
+          break;
+        case "hihat-volume":
+          this.hihatAudio.volume = 1;
+          break;
+      }
+    }
+  }
 }
 
 const drumKit = new DrumKit();
@@ -111,5 +143,11 @@ drumKit.playButton.addEventListener("click", () => {
 drumKit.selects.forEach((select: HTMLSelectElement) => {
   select.addEventListener("change", (event) => {
     drumKit.changeSound(event);
+  });
+});
+
+drumKit.muteButtons.forEach((button: HTMLButtonElement) => {
+  button.addEventListener("click", (event) => {
+    drumKit.mute(event);
   });
 });
