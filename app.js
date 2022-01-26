@@ -6,6 +6,7 @@ class DrumKit {
     hihatAudio;
     step = 0;
     bpm = 150;
+    intervalID = null;
     constructor() {
         this.playButton = document.querySelector(".play");
         this.pads = document.querySelectorAll(".pad");
@@ -15,9 +16,25 @@ class DrumKit {
     }
     start() {
         const interval = (60 / this.bpm) * 1000;
-        setInterval(() => {
-            this.repeat();
-        }, interval);
+        if (this.intervalID) {
+            clearInterval(this.intervalID);
+            this.intervalID = null;
+        }
+        else {
+            this.intervalID = setInterval(() => {
+                this.repeat();
+            }, interval);
+        }
+    }
+    updateButton() {
+        if (this.intervalID) {
+            this.playButton.innerText = "Play";
+            this.playButton.classList.remove("active");
+        }
+        else {
+            this.playButton.innerText = "Stop";
+            this.playButton.classList.add("active");
+        }
     }
     repeat() {
         const activeBeats = document.querySelectorAll(`.b${this.step}`);
@@ -53,5 +70,6 @@ drumKit.pads.forEach((pad) => {
     });
 });
 drumKit.playButton.addEventListener("click", () => {
+    drumKit.updateButton();
     drumKit.start();
 });
